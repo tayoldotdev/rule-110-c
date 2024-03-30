@@ -1,28 +1,26 @@
 #include <stdio.h>
 
 #define BOARD_CAP 32
-static int board[2][BOARD_CAP];
+static int board[BOARD_CAP];
 
 int main(void)
 {
-    int current_board = 0;
-    board[current_board][BOARD_CAP - 2] = 1;
+    board[BOARD_CAP - 2] = 1;
 
     for (size_t i = 0; i < BOARD_CAP-2; ++i) {
         for (size_t j = 0; j < BOARD_CAP; ++j) {
-            printf("%c", " *"[board[current_board][j]], stdout);
+            printf("%c", " *"[board[j]], stdout);
         }
         printf("\n");
 
-        int next_board = 1 - current_board;
+        int a = board[0];
+        int b = board[1];
+        int c = board[2];
+        int pattern = (board[0] << 2) | (board[1] << 1);
         for (size_t j = 1; j < BOARD_CAP-1; ++j) {
-            int a = board[current_board][j-1];
-            int b = board[current_board][j];
-            int c = board[current_board][j+1];
-            int pattern = (a<<2) | (b<<1) | (c<<0);
-            board[next_board][j] = (110 >> pattern) & 1;
+            pattern = ((pattern << 1) & 7) | board[j+1];
+            board[j] = (110 >> pattern) & 1;
         }
-        current_board = next_board;
     }
     return 0;
 }
