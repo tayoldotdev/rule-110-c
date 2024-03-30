@@ -1,17 +1,5 @@
 #include <stdio.h>
 
-// Substitution table
-static const int table[8] = {
-    [0] = 0,
-    [1] = 1,
-    [2] = 1,
-    [3] = 1,
-    [4] = 0,
-    [5] = 1,
-    [6] = 1,
-    [7] = 0,
-};
-
 #define BOARD_CAP 32
 static int board[2][BOARD_CAP];
 
@@ -32,7 +20,7 @@ int main(void)
             int b = board[current_board][j];
             int c = board[current_board][j+1];
             int pattern = (a<<2) | (b<<1) | (c<<0);
-            board[next_board][j] = table[pattern];
+            board[next_board][j] = (110 >> pattern) & 1;
         }
         current_board = next_board;
     }
